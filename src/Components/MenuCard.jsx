@@ -1,55 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { menuData } from "../Constants";
-import { useOutletContext } from "react-router-dom";
+import { useAppContext } from "../Contexts/AppContext";
 
 const MenuCard = () => {
-  const { cart, setCart, searchQuery, activeTab } = useOutletContext();
-  const [selectedSizes, setSelectedSizes] = useState([]);
+  const {
+    cart,
+    searchQuery,
+    activeTab,
+    selectedSizes,
+    handleSizeChange,
+    addToCart,
+  } = useAppContext();
 
-  const handleSizeChange = (id, size) => {
-    setSelectedSizes((prev) => {
-      const exists = prev.find((item) => item.id === id);
-      if (exists) {
-        return prev.map((item) => (item.id === id ? { ...item, size } : item));
-      }
-      return [...prev, { id, size }];
-    });
-  };
-
-  const addToCart = (id) => {
-    const item = menuData.find((i) => i.id === id);
-    if (!item) return;
-
-    const selected = selectedSizes.find((s) => s.id === id);
-    const size = selected?.size || "small";
-
-    const price = item.Prices[size]?.new;
-    if (!price) return;
-
-    setCart((prev) => {
-      const index = prev.findIndex((c) => c.id === id && c.size === size);
-
-      if (index !== -1) {
-        return prev.map((c, i) =>
-          i === index ? { ...c, quantity: c.quantity + 1 } : c
-        );
-      }
-
-      return [
-        ...prev,
-        {
-          id,
-          name: item.name,
-          size,
-          price,
-          image: item.image,
-          quantity: 1,
-        },
-      ];
-    });
-  };
-
-const filteredMenu = menuData.filter((item) => {
+  const filteredMenu = menuData.filter((item) => {
     if (activeTab === "special" && item.category !== "noodles") return false;
     if (activeTab === "south" && item.category !== "rice") return false;
     return item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -64,7 +27,6 @@ const filteredMenu = menuData.filter((item) => {
             selectedSizes.find((s) => s.id === item.id)?.size || "small";
 
           const price = item.Prices[currentSize];
-
           const isAdded = cart.some(
             (c) => c.id === item.id && c.size === currentSize
           );
@@ -101,13 +63,11 @@ const filteredMenu = menuData.filter((item) => {
                   <button
                     key={size}
                     onClick={() => handleSizeChange(item.id, size)}
-                    className={`
-        rounded
-        text-xs md:text-sm
-        px-2 py-1 md:px-3 md:py-2
-        ${currentSize === size ? "bg-[#F99147] text-white" : "text-white"}
-        transition-colors duration-200
-      `}
+                    className={`rounded text-xs md:text-sm px-2 py-1 md:px-3 md:py-2 ${
+                      currentSize === size
+                        ? "bg-[#F99147] text-white"
+                        : "text-white"
+                    } transition-colors duration-200`}
                   >
                     {size[0].toUpperCase()}
                   </button>
@@ -116,12 +76,9 @@ const filteredMenu = menuData.filter((item) => {
 
               {/* ADD TO CART */}
               <button
-                onClick={() => addToCart(item.id)}
-                className={`mt-3 sm:mt-4 w-fit sm:w-auto px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm md:text-base transition-colors truncate
-                ${
-                  isAdded
-                    ? "bg-green-600 text-white"
-                    : "bg-[#F99147] text-white"
+                onClick={() => addToCart(item, currentSize)}
+                className={`mt-3 sm:mt-4 w-fit sm:w-auto px-4 sm:px-6 py-2 rounded-lg text-xs sm:text-sm md:text-base transition-colors truncate ${
+                  isAdded ? "bg-green-600 text-white" : "bg-[#F99147] text-white"
                 }`}
               >
                 {isAdded ? "Added ✔" : "Add to Cart"}

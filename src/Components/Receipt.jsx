@@ -1,14 +1,17 @@
 import { X } from "lucide-react";
+import { useAppContext } from "../Contexts/AppContext";
 
-const ReceiptPopup = ({
-  isOpen,
-  onClose,
-  cart,
-  orderDateTime,
-  orderType,
-  onOrder,
-}) => {
-  if (!isOpen) return null;
+const ReceiptPopup = () => {
+  const {
+    showReceipt,
+    closeReceipt,
+    confirmOrder,
+    cart,
+    orderDateTime,
+    orderType,
+  } = useAppContext();
+
+  if (!showReceipt) return null;
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -19,22 +22,19 @@ const ReceiptPopup = ({
   });
 
   return (
-    <div className="fixed inset-0 z-[999] bg-black/60 flex items-center justify-center font-barlow">
+    <div className="fixed inset-0 z-[999] bg-black/60 flex items-center justify-center">
       <div className="bg-[#1F1D2B] w-[90%] max-w-md rounded-xl p-6 text-white relative">
-        {/* CLOSE */}
         <div className="flex justify-start">
-          <h2 className="text-xl font-semibold">Receiptxx</h2>
-
-          {/* <button onClick={onClose} className=" text-red-500">
+          <h2 className="text-xl font-semibold">Receipt</h2>
+          {/* <button onClick={closeReceipt} className=" text-red-500">
             <X />
           </button> */}
         </div>
-        <div className="flex flex-col mt-">
+
+        <div className="flex flex-row items-center justify-between mt-2">
           <div className="flex flex-row gap-2 items-center">
             {orderDateTime && <p className="text-sm text-gray-400">{date}</p>}
-
             <p className="text-lg text-gray-400">|</p>
-
             {orderDateTime && <p className="text-sm text-gray-400">{time}</p>}
           </div>
 
@@ -68,16 +68,14 @@ const ReceiptPopup = ({
         </div>
 
         <button
-          onClick={() => {
-            onOrder();
-            onClose();
-          }}
-          className="mt-5 w-full bg-[#F99147] py-2 rounded-lg hover:bg-[#f77b22] shadow-2xl font-sans font-semibold">
+          onClick={confirmOrder}
+          className="mt-5 w-full bg-[#F99147] py-2 rounded-lg hover:bg-[#f77b22] shadow-2xl font-semibold"
+        >
           Confirm Order
         </button>
         <button
-          onClick={onClose}
-          className="mt-2 w-full py-2 rounded-lg border hover:bg-[#22202e] border-gray-500/50 shadow-2xl font-sans font-semibold"
+          onClick={closeReceipt}
+          className="mt-2 w-full py-2 rounded-lg border hover:bg-[#22202e] border-gray-500/50 shadow-2xl font-semibold"
         >
           Close
         </button>

@@ -1,17 +1,20 @@
-import { ChevronDown, Search, ShoppingCartIcon } from "lucide-react";
+import { Search, ShoppingCartIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useAppContext } from "../Contexts/AppContext";
 
-const Header = ({
-  isCartOpen,
-  onCartOpen,
-  cart,
-  orderType,
-  setOrderType,
-  searchQuery,
-  setSearchQuery,
-  activeTab,
-  setActiveTab,
-}) => {
+const Header = () => {
+  const {
+    cart,
+    isCartOpen,
+    onCartOpen,
+    orderType,
+    setOrderType,
+    searchQuery,
+    setSearchQuery,
+    activeTab,
+    setActiveTab,
+  } = useAppContext();
+
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const Header = ({
             <h1 className="text-white text-xl sm:text-2xl md:text-3xl font-semibold">
               Chef Kitchen
             </h1>
-            <p className="text-slate-500 text-xs sm:text-xs md:text-sm  font-medium">
+            <p className="text-slate-500 text-xs sm:text-xs md:text-sm font-medium">
               {dateToday}
             </p>
           </div>
@@ -71,15 +74,24 @@ const Header = ({
 
         {/* TABS */}
         <div className="flex gap-5 sm:gap-5 md:gap-8 lg:gap-8 pb-2 border-b border-b-slate-500/50 font-semibold text-sm sm:text-base overflow-x-auto whitespace-nowrap">
-          <button onClick={() => setActiveTab("today")} className={tabClass("today")}>
+          <button
+            onClick={() => setActiveTab("today")}
+            className={tabClass("today")}
+          >
             All
           </button>
 
-          <button onClick={() => setActiveTab("special")} className={tabClass("special")}>
+          <button
+            onClick={() => setActiveTab("special")}
+            className={tabClass("special")}
+          >
             Noodles
           </button>
 
-          <button onClick={() => setActiveTab("south")} className={tabClass("south")}>
+          <button
+            onClick={() => setActiveTab("south")}
+            className={tabClass("south")}
+          >
             Rice
           </button>
         </div>

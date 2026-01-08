@@ -1,14 +1,17 @@
 import { Trash2, X } from "lucide-react";
+import { useAppContext } from "../Contexts/AppContext";
 
-const CartDrawer = ({
-  isOpen,
-  onClose,
-  cart,
-  setCart,
-  onOrderNow,
-  orderType,
-  setOrderType,
-}) => {
+const CartDrawer = () => {
+  const {
+    cart,
+    setCart,
+    isCartOpen,
+    onCartClose,
+    orderType,
+    setOrderType,
+    openReceipt,
+  } = useAppContext();
+
   const sizeLabel = {
     small: "S",
     medium: "M",
@@ -37,7 +40,7 @@ const CartDrawer = ({
       className={`fixed top-0 right-0 z-50 h-full w-full sm:max-w-[425px]
       bg-[#1F1D2B] transition-transform duration-300
       px-3 sm:px-4 md:px-6 flex flex-col font-barlow
-      ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      ${isCartOpen ? "translate-x-0" : "translate-x-full"}`}
     >
       {/* HEADER */}
       <div className="sticky top-0 bg-[#1F1D2B] z-10 pt-6 sm:pt-8">
@@ -45,7 +48,7 @@ const CartDrawer = ({
           <h2 className="text-white text-base sm:text-lg font-semibold">
             Orders #1234
           </h2>
-          <button onClick={onClose}>
+          <button onClick={onCartClose}>
             <X className="text-red-500" />
           </button>
         </div>
@@ -56,14 +59,14 @@ const CartDrawer = ({
               key={type}
               onClick={() => setOrderType(type)}
               className={`
-      px-3 py-1 rounded-lg text-xs sm:text-sm transition-all
-      border
-      ${
-        orderType === type
-          ? "bg-[#F99147] text-white border-[#F99147]"
-          : "text-[#F99147] border-gray-500/50 hover:bg-[#F99147] hover:text-white"
-      }
-    `}
+                px-3 py-1 rounded-lg text-xs sm:text-sm transition-all
+                border
+                ${
+                  orderType === type
+                    ? "bg-[#F99147] text-white border-[#F99147]"
+                    : "text-[#F99147] border-gray-500/50 hover:bg-[#F99147] hover:text-white"
+                }
+              `}
             >
               {type}
             </button>
@@ -107,19 +110,19 @@ const CartDrawer = ({
                       <p className="font-medium truncate max-w-44 sm:max-w-28 md:max-w-44">
                         {item.name}
                       </p>
-                      <div className="flex gap-2 text-xs sm:text-sm font-semibold">
-                        <p className="text-white bg-orange-500/50 border border-white/25 rounded-full px-2">{sizeLabel[item.size]}</p>
-                        <p className="text-gray-400">$ {item.price}</p>
+
+                      <div className="flex gap-2 font-semibold">
+                        <p className="flex items-center text-white border border-white/25 rounded-lg px-2 text-xs">
+                          {sizeLabel[item.size]}
+                        </p>
+                        <p className="text-gray-400 text-sm">$ {item.price}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* QTY */}
                   <div className="flex justify-center">
-                    <p
-                      className="bg-[#2D303E] px-5 py-3
-                      rounded-lg border border-[#393C49] text-sm"
-                    >
+                    <p className="bg-[#2D303E] px-5 py-3 rounded-lg border border-[#393C49] text-sm">
                       {item.quantity}
                     </p>
                   </div>
@@ -170,7 +173,7 @@ const CartDrawer = ({
           </div>
 
           <button
-            onClick={onOrderNow}
+            onClick={() => openReceipt()}
             className="mt-4 w-full bg-[#F99147]
             py-2 rounded-lg font-medium
             hover:bg-[#f77b22] transition-all"
@@ -184,3 +187,4 @@ const CartDrawer = ({
 };
 
 export default CartDrawer;
+
