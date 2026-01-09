@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { SidebarItems } from "../Constants";
 
-const AppContext = createContext(null);
+const CartContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
 
@@ -70,7 +70,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider
+    <CartContext.Provider
       value={{
         cart,
         setCart,
@@ -101,10 +101,10 @@ export const AppProvider = ({ children }) => {
       }}
     >
       {children}
-    </AppContext.Provider>
+    </CartContext.Provider>
   );
 };
 
-export const useAppContext = () => useContext(AppContext);
+export const useCartContext = () => useContext(CartContext);
 
-export default AppContext;
+export default CartContext;

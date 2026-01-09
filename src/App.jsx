@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import MenuLayout from "./Layouts/MenuLayout";
 import MenuCard from "./Components/MenuCard";
-import { AppProvider } from "./Contexts/AppContext";
+import { AppProvider } from "./Contexts/CartContext";
 
 
 function App() {

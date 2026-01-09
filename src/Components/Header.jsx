@@ -1,6 +1,6 @@
 import { Search, ShoppingCartIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useAppContext } from "../Contexts/AppContext";
+import { useCartContext } from "../Contexts/CartContext";
 
 const Header = () => {
   const {
@@ -13,7 +13,7 @@ const Header = () => {
     setSearchQuery,
     activeTab,
     setActiveTab,
-  } = useAppContext();
+  } = useCartContext();
 
   const [date, setDate] = useState(new Date());
 

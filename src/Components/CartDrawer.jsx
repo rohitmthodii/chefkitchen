@@ -1,5 +1,5 @@
 import { Trash2, X } from "lucide-react";
-import { useAppContext } from "../Contexts/AppContext";
+import { useCartContext } from "../Contexts/CartContext";
 
 const CartDrawer = () => {
   const {
@@ -10,7 +10,7 @@ const CartDrawer = () => {
     orderType,
     setOrderType,
     openReceipt,
-  } = useAppContext();
+  } = useCartContext();
 
   const sizeLabel = {
     small: "S",

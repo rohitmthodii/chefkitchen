@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import Exit from "../assets/exit.svg?react";
 import { SidebarItems } from "../Constants";
-import { useAppContext } from "../Contexts/AppContext";
+import { useCartContext } from "../Contexts/CartContext";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu } = useAppContext();
+  const { activeMenu, setActiveMenu } = useCartContext();
 
   return (
     <section

@@ -1,6 +1,6 @@
 import React from "react";
 import { menuData } from "../Constants";
-import { useAppContext } from "../Contexts/AppContext";
+import { useCartContext } from "../Contexts/CartContext";
 
 const MenuCard = () => {
   const {
@@ -10,7 +10,7 @@ const MenuCard = () => {
     selectedSizes,
     handleSizeChange,
     addToCart,
-  } = useAppContext();
+  } = useCartContext();
 
   const filteredMenu = menuData.filter((item) => {
     if (activeTab === "special" && item.category !== "noodles") return false;

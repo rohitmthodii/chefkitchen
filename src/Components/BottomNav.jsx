@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SidebarItems } from "../Constants";
-import { Link } from "react-router-dom";
-import { useAppContext } from "../Contexts/AppContext";
+import { Link, useLocation } from "react-router-dom";
+import { useCartContext } from "../Contexts/CartContext";
 
 const BottomNav = () => {
-  const { activeMenu, setActiveMenu } = useAppContext();
+  const { activeMenu, setActiveMenu } = useCartContext();
+  const location = useLocation();
+
+  // 🔹 Automatically set active menu based on current path
+  useEffect(() => {
+    const current = SidebarItems.find((item) => item.path === location.pathname);
+    if (current) setActiveMenu(current);
+  }, [location.pathname, setActiveMenu]);
 
   return (
     <div className="fixed md:hidden h-20 grid grid-cols-5 bg-white/10 backdrop-blur-md bottom-3 left-3 right-3 rounded-3xl">
       {SidebarItems.map((option) => {
-        const isActive = activeMenu.id === option.id;
+        const isActive = activeMenu?.id === option.id;
         const Icon = option.Icon;
 
         return (
@@ -24,9 +31,7 @@ const BottomNav = () => {
             }`}
           >
             <Icon />
-            {isActive && (
-              <span className="text-[10px]">{option.title}</span>
-            )}
+            {isActive && <span className="text-[10px]">{option.title}</span>}
           </Link>
         );
       })}

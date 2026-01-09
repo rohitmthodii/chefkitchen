@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { useAppContext } from "../Contexts/AppContext";
+import { useCartContext } from "../Contexts/CartContext";
 
 const ReceiptPopup = () => {
   const {
@@ -9,7 +9,7 @@ const ReceiptPopup = () => {
     cart,
     orderDateTime,
     orderType,
-  } = useAppContext();
+  } = useCartContext();
 
   if (!showReceipt) return null;
 
@@ -40,7 +40,7 @@ const ReceiptPopup = () => {
 
           <div>
             <p className="text-sm text-gray-400">
-              Order Type: <span className="text-blue-500">{orderType}</span>
+              Order Type : <span className="text-blue-500">{orderType}</span>
             </p>
           </div>
         </div>
@@ -51,7 +51,7 @@ const ReceiptPopup = () => {
               key={`${item.id}-${item.size}`}
               className="flex justify-between text-sm border-t border-gray-500/70 py-2"
             >
-              <p className="md:max-w-60 truncate w-full">{item.name}</p>
+              <p className="md:max-w-60 truncate w-full text-base">{item.name}</p>
               <p className="max-w-20 w-full text-gray-300 ml-5 md:ml-0 lg:ml-0">
                 {item.size} × {item.quantity}
               </p>

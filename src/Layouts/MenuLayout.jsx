@@ -5,10 +5,10 @@ import CartDrawer from "../Components/CartDrawer";
 import Receipt from "../Components/Receipt";
 import BottomNav from "../Components/BottomNav";
 import { useEffect } from "react";
-import { useAppContext } from "../Contexts/AppContext";
+import { useCartContext } from "../Contexts/CartContext";
 
 const MenuLayout = () => {
-  const { isCartOpen, orderPlaced, setOrderPlaced } = useAppContext();
+  const { isCartOpen, orderPlaced, setOrderPlaced } = useCartContext();
 
   useEffect(() => {
     if (orderPlaced) {
